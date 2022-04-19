@@ -12,14 +12,14 @@ import java.sql.SQLException;
 public class SQLData {
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/app", "user", "pass");
+                "jdbc:mysql://localhost:3306/app_db", "user", "pass");
     }
 
     public static String getVerificationCode() {
         val codeSQL = "SELECT code FROM auth_codes ORDER BY created DESC LIMIT 1";
         val runner = new QueryRunner();
         try (val conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/app", "user", "pass")) {
+                "jdbc:mysql://localhost:3306/app_db", "user", "pass")) {
             val code = runner.query(conn, codeSQL, new ScalarHandler<String>());
 
             return code;
@@ -36,7 +36,7 @@ public class SQLData {
         val deleteCard = "DELETE FROM cards";
         val deleteUser = "DELETE FROM users";
         try (val conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/app", "user", "pass")
+                "jdbc:mysql://localhost:3306/app_db", "user", "pass")
         ) {
             runner.update(conn, deleteCode);
             runner.update(conn, deleteCard);
